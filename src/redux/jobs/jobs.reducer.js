@@ -3,17 +3,20 @@ import {
   REMOVE_ITEM,
   UPDATE_ITEM,
   FILTER_ITEM,
+  SELECT_ITEM,
 } from './jobs.action'
 
 const initialState = {
   jobLists: [{
-    id: '0',
+    id: Date.now(),
     title: 'Job title',
     description: 'Lorem Ipsum',
     category: 'Computer Science',
+    isShow: true,
   }],
   loading: false,
   error: null,
+  currentJob: null,
 }
 
 const isJobMatchedText = (job, text) => (
@@ -25,9 +28,13 @@ const isJobMatchedText = (job, text) => (
 export default function jobReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_ITEM: {
+      const newJob = {
+        ...action.payload,
+        isShow: true,
+      }
       return {
         ...state,
-        jobLists: [action.payload, ...state.jobLists],
+        jobLists: [newJob, ...state.jobLists],
       }
     }
     case REMOVE_ITEM: {
@@ -49,7 +56,16 @@ export default function jobReducer(state = initialState, action) {
     case FILTER_ITEM: {
       return {
         ...state,
-        jobLists: state.jobLists.map(job => isJobMatchedText(job, action.payload))
+        jobLists: state.jobLists.map(job => ({
+          ...job,
+          isShow: isJobMatchedText(job, action.payload)
+        }))
+      }
+    }
+    case SELECT_ITEM: {
+      return {
+        ...state,
+        currentJob: state.jobLists.filter(job => job.id.toString() === action.payload.toString())[0],
       }
     }
     default:

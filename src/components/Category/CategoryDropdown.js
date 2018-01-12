@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Menu, Dropdown, Icon } from 'antd'
 
 const CATEGORY = [{
@@ -35,10 +36,19 @@ export default class CategoryDropdown extends Component {
     return (
       <Dropdown overlay={menu}>
         <p>
-          <span style={{ paddingRight: 5 }}>{this.props.title}</span>
+          <span style={{ paddingRight: 5 }}>{this.props.title || 'Choose your category'}</span>
           <Icon type="down" />
         </p>
       </Dropdown>
     )
   }
+}
+
+CategoryDropdown.propTypes = {
+  onClickItem: PropTypes.func.isRequired,
+  title: PropTypes.string,
+}
+
+CategoryDropdown.defaultProps = {
+  onClickItem: () => {},
 }

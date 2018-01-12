@@ -20,7 +20,7 @@ const Root = () => (
       <div>
         <Header />
         <Route exact path="/" component={JobListContainer}/>
-        <Route exact path="/new" component={JobCreateContainer}/>
+        <Route exact path="/job/:id" component={JobCreateContainer}/>
       </div>
     </Router>
   </Provider>

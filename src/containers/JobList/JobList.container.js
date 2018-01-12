@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router'
 
 import JobListComponent from '../../components/JobList/JobList.component'
 import { removeJob, filterJob } from '../../redux/jobs/jobs.action'
@@ -10,13 +11,28 @@ class JobList extends Component {
     this.props.actions.removeJob(job)
   }
 
+  handleSelectJob = (job) => {
+    this.props.history.push(`/job/${job.id}`)
+  }
+
+  handleCreateJob = () => {
+    this.props.history.push('/job/new')
+  }
+
+  handleSearchJob = (text) => {
+    this.props.actions.filterJob(text)
+  }
+
   render() {
     return (
       <div>
-        <h2>JobList</h2>
+        <h2 className="text-center">Jobs List</h2>
         <JobListComponent
           data={this.props.jobs.jobLists}
           onRemoveJob={this.handleRemoveJob}
+          onSelectJob={this.handleSelectJob}
+          onCreateJob={this.handleCreateJob}
+          onSearchJob={this.handleSearchJob}
         />
       </div>
     )
@@ -32,4 +48,4 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(JobList)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(JobList))
