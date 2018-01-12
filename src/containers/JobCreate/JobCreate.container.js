@@ -20,9 +20,9 @@ class JobCreate extends Component {
   onSaveJob = (job) => {
     if (this.isCreateNew()) {
       const newJob = { ...job, id: Date.now() }
-      this.props.actions.addNewJob(newJob)
+      this.props.actions.addNewJob(newJob, this.props.history)
     } else {
-      this.props.actions.updateJob(job)
+      this.props.actions.updateJob(job, this.props.history)
     }
   }
 

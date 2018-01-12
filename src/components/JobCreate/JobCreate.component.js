@@ -18,7 +18,7 @@ export default class JobCreateComponent extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.job && nextProps.job) {
+    if (nextProps.job) {
       this.setState({
         inputValue: {
           title: nextProps.job.title,
@@ -35,8 +35,6 @@ export default class JobCreateComponent extends Component {
         ...this.state.inputValue,
         [key]: text,
       }
-    }, () => {
-      console.log(this.state)
     })
   }
 
