@@ -4,19 +4,24 @@ import { Provider } from 'react-redux';
 import {
   BrowserRouter as Router,
   Route,
-  Link
 } from 'react-router-dom';
 import 'antd/dist/antd.css';
 
 import './index.css';
 import store from './redux/store'
-import App from './App';
+import Header from './components/Header/Header'
+import JobListContainer from './containers/JobList/JobList.container'
+import JobCreateContainer from './containers/JobCreate/JobCreate.container'
 import registerServiceWorker from './registerServiceWorker';
 
 const Root = () => (
   <Provider store={store}>
     <Router>
-      <Route exact path="/" component={App}/>
+      <div>
+        <Header />
+        <Route exact path="/" component={JobListContainer}/>
+        <Route exact path="/new" component={JobCreateContainer}/>
+      </div>
     </Router>
   </Provider>
 )
